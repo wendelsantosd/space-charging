@@ -1,3 +1,4 @@
+import { RechargeResolver } from '@modules/recharge/api/resolvers/recharge.resolver';
 import { StationResolver } from '@modules/station';
 import { UserResolver } from '@modules/user';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -12,6 +13,6 @@ import { GraphQLModule } from '@nestjs/graphql';
     }),
   ],
   controllers: [],
-  providers: [StationResolver, UserResolver],
+  providers: [StationResolver, UserResolver, RechargeResolver],
 })
 export class AppModule {}
