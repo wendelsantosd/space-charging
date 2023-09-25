@@ -49,8 +49,6 @@ export class UserResolver {
       userId: id,
     });
 
-    console.log(response);
-
     return response;
   }
 }
