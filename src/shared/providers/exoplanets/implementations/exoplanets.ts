@@ -1,3 +1,4 @@
+import { Exoplanet } from '@modules/exoplanets';
 import { IHttpClient } from '@shared/providers/http-client';
 import { ExoplanetsResponse, IExoplanets } from '../model';
 
@@ -8,7 +9,7 @@ export class Exoplanets implements IExoplanets {
     const url =
       'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_bmassj+from+pscomppars+where+pl_bmassj+>+10&format=json';
 
-    const response = await this.httpClient.request<void, ExoplanetsResponse>({
+    const response = await this.httpClient.request<void, Exoplanet[]>({
       method: 'get',
       url,
     });
@@ -20,6 +21,9 @@ export class Exoplanets implements IExoplanets {
       };
     }
 
-    return response;
+    return {
+      isOk: true,
+      data: response.response,
+    };
   }
 }

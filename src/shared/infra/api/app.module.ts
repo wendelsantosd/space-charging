@@ -1,7 +1,7 @@
+import { ExoplanetsResolver } from '@modules/exoplanets';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { TestResolver } from '../../../test.resolver';
 
 @Module({
   imports: [
@@ -11,6 +11,6 @@ import { TestResolver } from '../../../test.resolver';
     }),
   ],
   controllers: [],
-  providers: [TestResolver],
+  providers: [ExoplanetsResolver],
 })
 export class AppModule {}

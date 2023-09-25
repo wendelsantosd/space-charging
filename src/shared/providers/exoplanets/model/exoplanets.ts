@@ -1,7 +1,4 @@
-export type Exoplanet = {
-  pl_name: string;
-  pl_bmassj: number;
-};
+import { Exoplanet } from '@modules/exoplanets';
 
 export type ExoplanetsResponse = {
   isOk: boolean;

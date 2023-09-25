@@ -20,7 +20,7 @@ export class NestJSAxios implements IHttpClient {
       return {
         isOk: true,
         statusCode: response.status,
-        response: { ...response.data },
+        response: response.data,
       };
     } catch (error) {
       return {
