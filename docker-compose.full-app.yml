@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  asara-api:
+    container_name: charge-spacing-api
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    volumes:      
+      - .:/usr/src/app
+    ports:
+      - '${EXTERNAL_PORT}:${PORT}'
+      - '9229:9229'
+    networks:
+      - charge_spacing
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: 'postgres'
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./.docker/db:/var/lib/postgresql/data
+    networks:
+      - modal
+    environment:      
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGDATA=/data/postgres
+      
+networks:
+  charge_spacing:
+    name: charge_spacing
+    driver: bridge
