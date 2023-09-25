@@ -1,4 +1,5 @@
 import { StationResolver } from '@modules/station';
+import { UserResolver } from '@modules/user';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -11,6 +12,6 @@ import { GraphQLModule } from '@nestjs/graphql';
     }),
   ],
   controllers: [],
-  providers: [StationResolver],
+  providers: [StationResolver, UserResolver],
 })
 export class AppModule {}
