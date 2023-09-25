@@ -1,2 +1,1 @@
-export * from './dtos';
-export * from './resolvers';
+export * from './api';
