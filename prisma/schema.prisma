@@ -23,7 +23,7 @@ model recharges {
   id        String    @id @unique @default(uuid())
   startTime DateTime  @default(now())
   endTime   DateTime
-  stationId String    @unique()
+  stationId String    @unique
   station   stations  @relation(fields: [stationId], references: [id])
   userId    String    @unique
   user      users     @relation(fields: [userId], references: [id])
