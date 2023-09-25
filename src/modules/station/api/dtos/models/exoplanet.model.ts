@@ -3,8 +3,8 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class Exoplanet {
   @Field()
-  pl_name: string;
+  name: string;
 
   @Field()
-  pl_bmassj: number;
+  mass: number;
 }

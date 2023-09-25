@@ -21,7 +21,7 @@ export class StationResolver {
       await makeStation().createStation(data);
       return 'Estação instalada com sucesso';
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar estação');
+      throw new Error('Ocorreu um erro ao criar a estação');
     }
   }
 }
