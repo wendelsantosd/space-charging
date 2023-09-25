@@ -7,40 +7,28 @@ import { CreateStationInput, Exoplanet, Station } from '../dtos';
 export class StationResolver {
   @Query(() => [Exoplanet])
   async suitablePlanets() {
-    try {
-      const response = await makeExoplanets().getIdealExoplanets();
+    const response = await makeExoplanets().getIdealExoplanets();
 
-      if (!response.isOk) throw new Error(response.message);
+    if (!response.isOk) throw new Error(response.message);
 
-      return response.data;
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao listar os exoplanetas');
-    }
+    return response.data;
   }
 
   @Query(() => [Station])
   async stations() {
-    try {
-      const response = await makeStation().getAll();
+    const response = await makeStation().getAll();
 
-      if (!response.isOk) throw new Error(response.message);
+    if (!response.isOk) throw new Error(response.message);
 
-      return response.data;
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao listar as estações');
-    }
+    return response.data;
   }
 
   @Mutation(() => String)
   async installStation(@Args('data') data: CreateStationInput) {
-    try {
-      const response = await makeStation().create(data);
+    const response = await makeStation().create(data);
 
-      if (!response.isOk) throw new Error(response.message);
+    if (!response.isOk) throw new Error(response.message);
 
-      return 'Estação instalada com sucesso';
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao criar a estação');
-    }
+    return 'Estação instalada com sucesso';
   }
 }

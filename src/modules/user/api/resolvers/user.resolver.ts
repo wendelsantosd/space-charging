@@ -6,14 +6,10 @@ import { CreateUserInput } from '../dtos';
 export class UserResolver {
   @Mutation(() => String)
   async createUser(@Args('data') data: CreateUserInput) {
-    try {
-      const response = await makeUser().create(data);
+    const response = await makeUser().create(data);
 
-      if (!response.isOk) throw new Error(response.message);
+    if (!response.isOk) throw new Error(response.message);
 
-      return 'Usuário criado com sucesso';
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o usuário');
-    }
+    return 'Usuário criado com sucesso';
   }
 }
