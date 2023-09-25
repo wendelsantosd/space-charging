@@ -9,6 +9,9 @@ export class StationResolver {
   async suitablePlanets() {
     try {
       const response = await makeExoplanets().getIdealExoplanets();
+
+      if (!response.isOk) throw new Error(response.message);
+
       return response.data;
     } catch (error) {
       throw new Error('Ocorreu um erro ao listar os exoplanetas');
@@ -18,7 +21,10 @@ export class StationResolver {
   @Mutation(() => String)
   async installStation(@Args('data') data: CreateStationInput) {
     try {
-      await makeStation().create(data);
+      const response = await makeStation().create(data);
+
+      if (!response.isOk) throw new Error(response.message);
+
       return 'Estação instalada com sucesso';
     } catch (error) {
       throw new Error('Ocorreu um erro ao criar a estação');
