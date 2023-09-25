@@ -5,6 +5,13 @@ export type StationResponse = {
   data?: Station;
   message?: string;
 };
+
+export type StationsResponse = {
+  isOk: boolean;
+  data?: Station[];
+  message?: string;
+};
 export interface IStationRepository {
-  createStation(data: CreateStationInput): Promise<StationResponse>;
+  create(data: CreateStationInput): Promise<StationResponse>;
+  getAll(): Promise<StationsResponse>;
 }

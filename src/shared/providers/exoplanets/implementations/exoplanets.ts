@@ -1,4 +1,4 @@
-import { Exoplanet } from '@modules/station';
+import { Exoplanet, makeStation } from '@modules/station';
 import { IHttpClient } from '@shared/providers/http-client';
 import { ExoplanetsResponse, IExoplanets } from '../model';
 
@@ -26,9 +26,14 @@ export class Exoplanets implements IExoplanets {
       };
     }
 
+    const stations = await makeStation().getAll();
+
     const exoplanets: Exoplanet[] = response.response.map((exoplanet) => ({
       name: exoplanet.pl_name,
       mass: exoplanet.pl_bmassj,
+      hasStation: stations.data.some(
+        (station) => station.planet === exoplanet.pl_name,
+      ),
     }));
 
     return {

@@ -18,7 +18,7 @@ export class StationResolver {
   @Mutation(() => String)
   async installStation(@Args('data') data: CreateStationInput) {
     try {
-      await makeStation().createStation(data);
+      await makeStation().create(data);
       return 'Estação instalada com sucesso';
     } catch (error) {
       throw new Error('Ocorreu um erro ao criar a estação');

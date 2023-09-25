@@ -7,4 +7,7 @@ export class Exoplanet {
 
   @Field()
   mass: number;
+
+  @Field()
+  hasStation: boolean;
 }

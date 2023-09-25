@@ -1,13 +1,37 @@
 import { PrismaService } from '@shared/infra/db';
 import { CreateStationInput, Station } from '../api';
-import { IStationRepository, StationResponse } from '../domain';
+import {
+  IStationRepository,
+  StationResponse,
+  StationsResponse,
+} from '../domain';
 
 export class StationRepository implements IStationRepository {
   constructor(private readonly orm: PrismaService) {}
 
-  public async createStation(
-    data: CreateStationInput,
-  ): Promise<StationResponse> {
+  public async getAll(): Promise<StationsResponse> {
+    try {
+      const stations = await this.orm.station.findMany();
+
+      const buildedStations: Station[] = stations.map((station) => ({
+        id: station.id,
+        name: station.name,
+        planet: station.planet,
+      }));
+
+      return {
+        isOk: true,
+        data: buildedStations,
+      };
+    } catch (error) {
+      return {
+        isOk: false,
+        message: `Ocorreu um erro ao listar as estações: ${error?.message}`,
+      };
+    }
+  }
+
+  public async create(data: CreateStationInput): Promise<StationResponse> {
     try {
       const payload = {
         name: data.name,
