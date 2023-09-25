@@ -10,6 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Test {
-  id     Int     @id @default(autoincrement())
+model Station {
+  id        String   @id @unique @default(uuid())
+  name      String
+  planet    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
 }

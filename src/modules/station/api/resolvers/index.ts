@@ -1,1 +1,1 @@
-export * from './station-resolver';
+export * from './station.resolver';
