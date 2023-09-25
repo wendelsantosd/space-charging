@@ -10,4 +10,7 @@ export class CreateRechargeInput {
 
   @Field()
   userId: string;
+
+  @Field()
+  token: string;
 }

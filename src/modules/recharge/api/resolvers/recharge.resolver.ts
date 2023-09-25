@@ -2,12 +2,17 @@ import { makeRecharge } from '@modules/recharge/repository';
 import { makeStation } from '@modules/station';
 import { makeUser } from '@modules/user';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { makeToken } from '@shared/providers';
 import { CreateRechargeInput, Recharge } from '../dtos';
 
 @Resolver()
 export class RechargeResolver {
   @Mutation(() => String)
   async recharge(@Args('data') data: CreateRechargeInput) {
+    const isAuthenticated = makeToken().verifyJWT(data.token);
+
+    if (!isAuthenticated.isOk) throw new Error('Token inválido');
+
     const user = await makeUser().getById(data.userId);
 
     if (!user.isOk) throw new Error(user.message);

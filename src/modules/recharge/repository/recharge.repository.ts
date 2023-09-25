@@ -44,7 +44,7 @@ export class RechargeRepository implements IRechargeRepository {
       if (userRecharging)
         return {
           isOk: false,
-          message: 'Usuário já tem recarga em andamento',
+          message: 'Usuário com recarga em andamento',
         };
 
       const stationRecharging = await this.orm.recharges.findUnique({
@@ -60,7 +60,8 @@ export class RechargeRepository implements IRechargeRepository {
         };
 
       const payload = {
-        ...data,
+        userId: data.userId,
+        stationId: data.stationId,
         endTime: new Date(data.endTime),
       };
 

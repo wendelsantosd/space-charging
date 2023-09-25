@@ -1,10 +1,14 @@
+import { JwtPayload } from 'jsonwebtoken';
+
 export type ResponseGenerate = {
   token: string;
   expiresIn: string;
 };
 
 export type ResponseVerify = {
-  error?: 'expired' | 'invalid';
+  isOk: boolean;
+  data?: string | JwtPayload;
+  error?: 'Token expirado' | 'Token expirado';
 };
 
 export interface IToken {

@@ -16,15 +16,22 @@ export class Token implements IToken {
     };
   }
 
-  verifyJWT<T>(token: string): ResponseVerify {
+  verifyJWT(token: string): ResponseVerify {
     const secret = process.env.TOKEN_SECRET;
     try {
       const data = verify(token, secret);
-      return data as T;
+      return {
+        isOk: true,
+        data,
+      };
     } catch (error) {
       return {
-        error: error.name === 'TokenExpiredError' ? 'expired' : 'invalid',
-      } as T;
+        isOk: false,
+        error:
+          error.name === 'TokenExpiredError'
+            ? 'Token expirado'
+            : 'Token expirado',
+      };
     }
   }
 }
