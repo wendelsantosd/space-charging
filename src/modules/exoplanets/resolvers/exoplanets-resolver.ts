@@ -5,7 +5,7 @@ import { Exoplanet } from '../dtos';
 @Resolver()
 export class ExoplanetsResolver {
   @Query(() => [Exoplanet])
-  public async getExoplanets() {
+  public async suitablePlanets() {
     const response = await makeExoplanets().getIdealExoplanets();
     return response.data;
   }
