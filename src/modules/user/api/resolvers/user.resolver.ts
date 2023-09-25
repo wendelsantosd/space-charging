@@ -1,7 +1,12 @@
 import { makeUser } from '@modules/user/repository';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { makeEncryptation } from '@shared/providers/encryptation';
-import { CreateUserInput } from '../dtos';
+import { makeToken } from '@shared/providers/token';
+import {
+  AuthenticateUser,
+  AuthenticateUserInput,
+  CreateUserInput,
+} from '../dtos';
 
 @Resolver()
 export class UserResolver {
@@ -21,5 +26,31 @@ export class UserResolver {
     if (!response.isOk) throw new Error(response.message);
 
     return 'Usuário criado com sucesso';
+  }
+
+  @Query(() => AuthenticateUser)
+  async authenticate(@Args('data') data: AuthenticateUserInput) {
+    const userExists = await makeUser().getByEmail(data.email);
+
+    if (!userExists.isOk) throw new Error('E-mail ou senha incorretos');
+
+    const {
+      data: { password, id },
+    } = userExists;
+
+    const isValidPassword = await makeEncryptation().compareHash(
+      data.password,
+      password,
+    );
+
+    if (!isValidPassword) throw new Error('E-mail ou senha incorretos');
+
+    const response = makeToken().generateJWT({
+      userId: id,
+    });
+
+    console.log(response);
+
+    return response;
   }
 }
