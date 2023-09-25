@@ -1,1 +1,1 @@
-export * from './make-encryptation.factory'
+export * from './make-encryptation.factory';

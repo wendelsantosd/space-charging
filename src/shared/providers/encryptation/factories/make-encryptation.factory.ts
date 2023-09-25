@@ -1,5 +1,4 @@
-import { BCryptProvider } from '../implementations';
-import { IEncryptationProvider } from '../model';
+import { BCrypt } from '../implementations';
+import { IEncryptation } from '../model/encryptation';
 
-export const makeEncryptation = (): IEncryptationProvider =>
-  new BCryptProvider();
+export const makeEncryptation = (): IEncryptation => new BCrypt();

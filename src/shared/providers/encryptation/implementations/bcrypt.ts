@@ -1,7 +1,7 @@
-import { IEncryptationProvider } from '../model';
+import { IEncryptation } from '../model';
 import { hash, compare } from 'bcrypt';
 
-export class BCryptProvider implements IEncryptationProvider {
+export class BCrypt implements IEncryptation {
   public async generateHash(data: string | Buffer): Promise<string> {
     return hash(data, 8);
   }
