@@ -10,10 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Station {
-  id        String   @id @unique @default(uuid())
+model stations {
+  id        String     @id @unique @default(uuid())
   name      String
   planet    String
-  createdAt DateTime @default(now())
+  recharge  recharges?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
+}
+
+model recharges {
+  id        String    @id @unique @default(uuid())
+  startTime DateTime  @default(now())
+  endTime   DateTime
+  stationId String    @unique()
+  station   stations  @relation(fields: [stationId], references: [id])
+  userId    String    @unique
+  user      users     @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+}
+
+model users {
+  id        String     @id @unique @default(uuid())
+  name      String
+  recharge  recharges?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
 }

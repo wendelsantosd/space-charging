@@ -11,7 +11,7 @@ export class StationRepository implements IStationRepository {
 
   public async getAll(): Promise<StationsResponse> {
     try {
-      const stations = await this.orm.station.findMany();
+      const stations = await this.orm.stations.findMany();
 
       const buildedStations: Station[] = stations.map((station) => ({
         id: station.id,
@@ -38,7 +38,7 @@ export class StationRepository implements IStationRepository {
         planet: data.planet,
       };
 
-      const station = await this.orm.station.create({
+      const station = await this.orm.stations.create({
         data: payload,
       });
 
