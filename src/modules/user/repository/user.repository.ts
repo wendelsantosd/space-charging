@@ -20,6 +20,37 @@ export class UserRepository implements IUserRepository {
       const buildedUser: User = {
         id: user.id,
         name: user.name,
+        email: user.email,
+      };
+
+      return {
+        isOk: true,
+        data: buildedUser,
+      };
+    } catch (error) {
+      return {
+        isOk: false,
+        message: `Ocorreu um erro ao buscar usuário: ${error?.message}`,
+      };
+    }
+  }
+
+  async getByEmail(email: string): Promise<UserResponse> {
+    try {
+      const user = await this.orm.users.findUnique({
+        where: { email },
+      });
+
+      if (!user)
+        return {
+          isOk: false,
+          message: 'Usuário não está cadastrado no sistema',
+        };
+
+      const buildedUser: User = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
       };
 
       return {
@@ -36,17 +67,14 @@ export class UserRepository implements IUserRepository {
 
   public async create(data: CreateUserInput): Promise<UserResponse> {
     try {
-      const payload = {
-        name: data.name,
-      };
-
       const user = await this.orm.users.create({
-        data: payload,
+        data,
       });
 
       const buildedUser: User = {
         id: user.id,
         name: user.name,
+        email: user.email,
       };
 
       return {

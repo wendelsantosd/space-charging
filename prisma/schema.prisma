@@ -34,6 +34,8 @@ model recharges {
 model users {
   id        String     @id @unique @default(uuid())
   name      String
+  email     String     @unique
+  password  String
   recharge  recharges?
   createdAt DateTime   @default(now())
   updatedAt DateTime?  @updatedAt
