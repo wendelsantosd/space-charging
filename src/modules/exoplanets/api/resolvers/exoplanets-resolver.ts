@@ -6,7 +6,11 @@ import { Exoplanet } from '../dtos';
 export class ExoplanetsResolver {
   @Query(() => [Exoplanet])
   public async suitablePlanets() {
-    const response = await makeExoplanets().getIdealExoplanets();
-    return response.data;
+    try {
+      const response = await makeExoplanets().getIdealExoplanets();
+      return response.data;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao listar os exoplanetas');
+    }
   }
 }
