@@ -1,9 +1,37 @@
 import { PrismaService } from '@shared/infra/db';
 import { CreateRechargeInput, Recharge } from '../api';
-import { IRechargeRepository, RechargeResponse } from '../domain';
+import {
+  IRechargeRepository,
+  RechargeResponse,
+  RechargesResponse,
+} from '../domain';
 
 export class RechargeRepository implements IRechargeRepository {
   constructor(private readonly orm: PrismaService) {}
+
+  async getAll(): Promise<RechargesResponse> {
+    try {
+      const recharges = await this.orm.recharges.findMany();
+
+      const buildedRecharges: Recharge[] = recharges.map((recharge) => ({
+        id: recharge.id,
+        stationId: recharge.stationId,
+        userId: recharge.userId,
+        startTime: recharge.startTime,
+        endTime: recharge.endTime,
+      }));
+
+      return {
+        isOk: true,
+        data: buildedRecharges,
+      };
+    } catch (error) {
+      return {
+        isOk: false,
+        message: `Ocorreu um erro ao listar as recargas: ${error?.message}`,
+      };
+    }
+  }
 
   public async create(data: CreateRechargeInput): Promise<RechargeResponse> {
     try {

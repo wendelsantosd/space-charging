@@ -1,8 +1,8 @@
 import { makeRecharge } from '@modules/recharge/repository';
 import { makeStation } from '@modules/station';
 import { makeUser } from '@modules/user';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CreateRechargeInput } from '../dtos';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CreateRechargeInput, Recharge } from '../dtos';
 
 @Resolver()
 export class RechargeResolver {
@@ -21,5 +21,14 @@ export class RechargeResolver {
     if (!response.isOk) throw new Error(response.message);
 
     return 'Recarga executada com sucesso';
+  }
+
+  @Query(() => [Recharge])
+  async recharges() {
+    const recharges = await makeRecharge().getAll();
+
+    if (!recharges.isOk) throw new Error(recharges.message);
+
+    return recharges.data;
   }
 }
