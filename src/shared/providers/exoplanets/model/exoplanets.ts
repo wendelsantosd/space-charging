@@ -1,4 +1,4 @@
-import { Exoplanet } from '@modules/exoplanets';
+import { Exoplanet } from '@modules/station';
 
 export type ExoplanetsResponse = {
   isOk: boolean;

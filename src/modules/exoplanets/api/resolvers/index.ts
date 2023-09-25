@@ -1,1 +1,0 @@
-export * from './exoplanets-resolver';

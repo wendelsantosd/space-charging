@@ -1,4 +1,4 @@
-import { ExoplanetsResolver } from '@modules/exoplanets';
+import { StationResolver } from '@modules/station';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -11,6 +11,6 @@ import { GraphQLModule } from '@nestjs/graphql';
     }),
   ],
   controllers: [],
-  providers: [ExoplanetsResolver],
+  providers: [StationResolver],
 })
 export class AppModule {}

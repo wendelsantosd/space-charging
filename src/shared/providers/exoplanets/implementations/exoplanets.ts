@@ -1,4 +1,4 @@
-import { Exoplanet } from '@modules/exoplanets';
+import { Exoplanet } from '@modules/station';
 import { IHttpClient } from '@shared/providers/http-client';
 import { ExoplanetsResponse, IExoplanets } from '../model';
 

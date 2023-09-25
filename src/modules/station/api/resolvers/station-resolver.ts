@@ -3,7 +3,7 @@ import { makeExoplanets } from '@shared/providers';
 import { Exoplanet } from '../dtos';
 
 @Resolver()
-export class ExoplanetsResolver {
+export class StationResolver {
   @Query(() => [Exoplanet])
   public async suitablePlanets() {
     try {
