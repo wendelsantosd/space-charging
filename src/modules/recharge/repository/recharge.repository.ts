@@ -7,8 +7,37 @@ export class RechargeRepository implements IRechargeRepository {
 
   public async create(data: CreateRechargeInput): Promise<RechargeResponse> {
     try {
+      const userRecharging = await this.orm.recharges.findUnique({
+        where: {
+          userId: data.userId,
+        },
+      });
+
+      if (userRecharging)
+        return {
+          isOk: false,
+          message: 'Usuário já tem recarga em andamento',
+        };
+
+      const stationRecharging = await this.orm.recharges.findUnique({
+        where: {
+          stationId: data.stationId,
+        },
+      });
+
+      if (stationRecharging)
+        return {
+          isOk: false,
+          message: 'Estação está com recarga em andamento, tente mais tarde',
+        };
+
+      const payload = {
+        ...data,
+        endTime: new Date(data.endTime),
+      };
+
       const recharge = await this.orm.recharges.create({
-        data,
+        data: payload,
       });
 
       const buildedRecharge: Recharge = {

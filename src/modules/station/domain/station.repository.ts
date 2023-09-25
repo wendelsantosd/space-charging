@@ -14,4 +14,5 @@ export type StationsResponse = {
 export interface IStationRepository {
   create(data: CreateStationInput): Promise<StationResponse>;
   getAll(): Promise<StationsResponse>;
+  getById(id: string): Promise<StationResponse>;
 }

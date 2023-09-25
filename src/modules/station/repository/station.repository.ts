@@ -9,6 +9,36 @@ import {
 export class StationRepository implements IStationRepository {
   constructor(private readonly orm: PrismaService) {}
 
+  async getById(id: string): Promise<StationResponse> {
+    try {
+      const station = await this.orm.stations.findUnique({
+        where: { id },
+      });
+
+      if (!station)
+        return {
+          isOk: false,
+          message: 'Estação não encontrada',
+        };
+
+      const buildedStation: Station = {
+        id: station.id,
+        name: station.name,
+        planet: station.planet,
+      };
+
+      return {
+        isOk: true,
+        data: buildedStation,
+      };
+    } catch (error) {
+      return {
+        isOk: false,
+        message: `Ocorreu um erro ao buscar estação: ${error?.message}`,
+      };
+    }
+  }
+
   public async getAll(): Promise<StationsResponse> {
     try {
       const stations = await this.orm.stations.findMany();
