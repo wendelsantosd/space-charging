@@ -1,7 +1,7 @@
 import { makeStation } from '@modules/station/repository';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { makeExoplanets } from '@shared/providers';
-import { CreateStationInput, Exoplanet } from '../dtos';
+import { CreateStationInput, Exoplanet, Station } from '../dtos';
 
 @Resolver()
 export class StationResolver {
@@ -15,6 +15,19 @@ export class StationResolver {
       return response.data;
     } catch (error) {
       throw new Error('Ocorreu um erro ao listar os exoplanetas');
+    }
+  }
+
+  @Query(() => [Station])
+  async stations() {
+    try {
+      const response = await makeStation().getAll();
+
+      if (!response.isOk) throw new Error(response.message);
+
+      return response.data;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao listar as estações');
     }
   }
 
